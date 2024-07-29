@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mstream-deployment
+  labels:
+    app: mstream
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mstream
+  template:
+    metadata:
+      labels:
+        app: mstream
+    spec:
+      initContainers:
+        - name: download-music
+          image: curlimages/curl
+          command: ['/bin/sh', '-c']
+          args:
+            - |
+              curl -L "https://drive.google.com/uc?export=download&id=116z-cW_xAgYzDmQnZeS7_-A6kYxUqFLs" -o /music/Brendan_Kinsella_-_02_-_Bach_-_Aria_Variata_BVW_989_-_Variation_No_2.mp3
+              curl -L "https://drive.google.com/uc?export=download&id=1whcs6NkT0-oUs2UC18cJvOE9bFWQvFOc" -o /music/Child-Dreams.mp3
+          volumeMounts:
+            - name: music-storage
+              mountPath: /music
+      containers:
+        - name: mstream
+          image: linuxserver/mstream:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: music-storage
+              mountPath: /music
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      volumes:
+        - name: music-storage
+          persistentVolumeClaim:
+            claimName: music-pvc
