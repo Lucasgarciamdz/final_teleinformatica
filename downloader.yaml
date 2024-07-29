@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: music-downloader
+spec:
+  containers:
+    - name: download-music
+      image: curlimages/curl
+      command: ['/bin/sh', '-c']
+      args:
+        - |
+          chmod 755 /music
+          curl -L "https://drive.google.com/uc?export=download&id=116z-cW_xAgYzDmQnZeS7_-A6kYxUqFLs" -o /music/Brendan_Kinsella_-_02_-_Bach_-_Aria_Variata_BVW_989_-_Variation_No_2.mp3
+          curl -L "https://drive.google.com/uc?export=download&id=1whcs6NkT0-oUs2UC18cJvOE9bFWQvFOc" -o /music/Child-Dreams.mp3
+      volumeMounts:
+        - name: music-storage
+          mountPath: /music
+      securityContext:
+        runAsUser: 0
+  restartPolicy: Never
+  volumes:
+    - name: music-storage
+      persistentVolumeClaim:
+        claimName: music-pvc

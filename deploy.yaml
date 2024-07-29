@@ -14,20 +14,6 @@ spec:
       labels:
         app: mstream
     spec:
-      initContainers:
-        - name: download-music
-          image: curlimages/curl
-          command: ['/bin/sh', '-c']
-          args:
-            - |
-              chmod 755 /music
-              curl -L "https://drive.google.com/uc?export=download&id=116z-cW_xAgYzDmQnZeS7_-A6kYxUqFLs" -o /music/Brendan_Kinsella_-_02_-_Bach_-_Aria_Variata_BVW_989_-_Variation_No_2.mp3
-              curl -L "https://drive.google.com/uc?export=download&id=1whcs6NkT0-oUs2UC18cJvOE9bFWQvFOc" -o /music/Child-Dreams.mp3
-          volumeMounts:
-            - name: music-storage
-              mountPath: /music
-          securityContext:
-            runAsUser: 0
       containers:
         - name: mstream
           image: linuxserver/mstream:latest
