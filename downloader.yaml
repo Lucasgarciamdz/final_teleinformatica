@@ -23,11 +23,7 @@ spec:
           securityContext:
             runAsUser: 0
       restartPolicy: Never
-  volumeClaimTemplates:
-    - metadata:
-        name: music-storage
-      spec:
-        accessModes: ['ReadWriteOnce']
-        resources:
-          requests:
-            storage: 1Gi
+      volumes:
+        - name: music-storage
+          persistentVolumeClaim:
+            claimName: music-pvc
