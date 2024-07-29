@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: 'false'
 spec:
   rules:
-    - host: lucasg2-mstream.my.kube.um.edu.ar
+    - host: lucasg3-mstream.my.kube.um.edu.ar
       http:
         paths:
           - path: /
