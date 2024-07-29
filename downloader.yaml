@@ -26,4 +26,4 @@ spec:
       volumes:
         - name: music-storage
           persistentVolumeClaim:
-            claimName: music-pvc
+            claimName: music-storage-mstream-0
