@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mstream
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mstream
@@ -48,13 +48,6 @@ spec:
               port: 3000
             initialDelaySeconds: 30
             periodSeconds: 10
-          resources:
-            requests:
-              memory: '256Mi'
-              cpu: '250m'
-            limits:
-              memory: '512Mi'
-              cpu: '500m'
       volumes:
         - name: music-storage
           persistentVolumeClaim:
