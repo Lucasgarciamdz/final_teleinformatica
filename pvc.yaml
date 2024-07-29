@@ -12,7 +12,6 @@ spec:
   hostPath:
     path: '/mnt/data/music'
     type: DirectoryOrCreate
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
